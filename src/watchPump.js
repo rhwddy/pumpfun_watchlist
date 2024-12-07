@@ -1,4 +1,5 @@
 import WebSocket from "ws";
+import isUriBlocked from "./utils/isUriBlocked.js";
 
 export default function watchPump() {
     const ws = new WebSocket("wss://pumpportal.fun/api/data");
@@ -12,8 +13,8 @@ export default function watchPump() {
     });
 
     ws.on("message", function message(data) {
-        const parsedData = JSON.parse(data);
-        console.log("New token:", parsedData);
+        data = JSON.parse(data);
+        console.log("Received message:", data);
     });
 
     ws.on("close", () => {
@@ -22,5 +23,9 @@ export default function watchPump() {
 
     ws.on("error", (err) => {
         console.error("WebSocket error:", err);
+    });
+
+    process.on("SIGINT", () => {
+        ws.close();
     });
 }
