@@ -8,7 +8,9 @@
         "dev": "node src/server.js"
     },
     "dependencies": {
+        "dotenv": "^16.4.7",
         "express": "^5.0.1",
-        "puppeteer": "^23.10.0"
+        "pg": "^8.13.1",
+        "ws": "^8.18.0"
     }
 }
