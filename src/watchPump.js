@@ -1,31 +1,38 @@
 import WebSocket from "ws";
-import isUriBlocked from "./utils/isUriBlocked.js";
+import getAllWallets from "./queries/getAllWallets.js";
+import getAllTokens from "./queries/getAllTokens.js";
 
-export default function watchPump() {
-    const ws = new WebSocket("wss://pumpportal.fun/api/data");
+const pumpWs = new WebSocket("wss://pumpportal.fun/api/data");
 
-    ws.on("open", function open() {
-        const payload = {
-            method: "subscribeNewToken",
-        };
-        ws.send(JSON.stringify(payload));
-        console.log("WebSocket connection opened and subscription sent.");
-    });
+const wallets = await getAllWallets();
+const tokens = await getAllTokens();
 
-    ws.on("message", function message(data) {
-        data = JSON.parse(data);
-        console.log("Received message:", data);
-    });
+pumpWs.on("open", function open() {
+    console.log("WebSocket connection established.");
+    pumpWs.send(
+        JSON.stringify({
+            method: "subscribeAccountTrade",
+            keys: wallets,
+        })
+    );
 
-    ws.on("close", () => {
-        console.log("WebSocket connection closed.");
-    });
+    pumpWs.send(
+        JSON.stringify({
+            method: "subscribeTokenTrade",
+            keys: tokens,
+        })
+    );
+    console.log(
+        `subscribed to ${wallets.length} wallets and ${tokens.length} tokens`
+    );
+});
 
-    ws.on("error", (err) => {
-        console.error("WebSocket error:", err);
-    });
+pumpWs.on("close", () => {
+    console.log("WebSocket connection closed.");
+});
 
-    process.on("SIGINT", () => {
-        ws.close();
-    });
-}
+pumpWs.on("error", (err) => {
+    console.error("WebSocket error:", err);
+});
+
+export default pumpWs;
