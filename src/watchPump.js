@@ -35,4 +35,9 @@ pumpWs.on("error", (err) => {
     console.error("WebSocket error:", err);
 });
 
+pumpWs.on("message", (data) => {
+    data = JSON.parse(data);
+    console.log(data);
+});
+
 export default pumpWs;
