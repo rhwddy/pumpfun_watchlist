@@ -1,30 +1,11 @@
 import WebSocket from "ws";
-import getAllWallets from "./queries/getAllWallets.js";
-import getAllTokens from "./queries/getAllTokens.js";
+import initializeWalletsAndTokensWs from "./serverFunctions/initializeWalletsAndTokensWs.js";
 
 const pumpWs = new WebSocket("wss://pumpportal.fun/api/data");
 
-const wallets = await getAllWallets();
-const tokens = await getAllTokens();
-
-pumpWs.on("open", function open() {
+pumpWs.on("open", async function open() {
     console.log("WebSocket connection established.");
-    pumpWs.send(
-        JSON.stringify({
-            method: "subscribeAccountTrade",
-            keys: wallets,
-        })
-    );
-
-    pumpWs.send(
-        JSON.stringify({
-            method: "subscribeTokenTrade",
-            keys: tokens,
-        })
-    );
-    console.log(
-        `subscribed to ${wallets.length} wallets and ${tokens.length} tokens`
-    );
+    await initializeWalletsAndTokensWs(pumpWs);
 });
 
 pumpWs.on("close", () => {
