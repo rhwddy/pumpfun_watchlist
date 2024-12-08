@@ -1,12 +1,12 @@
 import pool from "../config/db.js";
 
-export default async function addWallet(address) {
+export default async function addWallet(address, name) {
     const client = await pool.connect();
     try {
         const result = await client.query(
             `WITH ins AS (
-              INSERT INTO wallet (address)
-              VALUES ($1)
+              INSERT INTO wallet (address, name)
+              VALUES ($1, $2)
               ON CONFLICT (address) DO NOTHING
               RETURNING *
             )
@@ -15,7 +15,7 @@ export default async function addWallet(address) {
             SELECT * FROM wallet
             WHERE address = $1
             LIMIT 1;`,
-            [address]
+            [address, name]
         );
 
         return result.rows[0];
