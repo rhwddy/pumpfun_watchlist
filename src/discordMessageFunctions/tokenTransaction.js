@@ -17,7 +17,7 @@ export default function tokenTransaction(data) {
     const transactionType = txType == "buy" ? "Bought" : "Sold";
 
     return `
-### Someone just ${transactionType} ${tokenPriceSol.toFixed(4)} SOL!
+### Someone just ${transactionType} ${transactionSolValue.toFixed(4)} SOL!
 ---
 **Transaction Type**: ${txType.toUpperCase()}
 **Trader**: [${traderPublicKey}](https://solscan.io/account/${traderPublicKey})
@@ -27,6 +27,7 @@ export default function tokenTransaction(data) {
 **Token Amount**: ${tokenAmount.toLocaleString()} tokens
 **Transaction Value**: ${transactionSolValue.toFixed(4)} SOL
 **New Token Balance**: ${newTokenBalance.toFixed(8)} tokens
+**Token Price**: ${tokenPriceSol} SOL
 ---
 **Market Cap**: ${marketCapSol.toFixed(4)} SOL
 **Tokens in Bonding Curve**: ${vTokensInBondingCurve.toLocaleString()} tokens

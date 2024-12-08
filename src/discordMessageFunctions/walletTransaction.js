@@ -18,7 +18,9 @@ export default function walletTransaction(data, wallet) {
     const transactionType = txType == "buy" ? "Bought" : "Sold";
 
     return `
-### ${wallet.name} just ${transactionType} ${tokenPriceSol.toFixed(4)} SOL!
+### ${wallet.name} just ${transactionType} ${transactionSolValue.toFixed(
+        4
+    )} SOL!
 ---
 **Trader**: [${traderPublicKey}](https://solscan.io/account/${traderPublicKey})  
 **Mint Address**: [${mint}](https://solscan.io/account/${mint})  
@@ -26,7 +28,8 @@ export default function walletTransaction(data, wallet) {
 ---
 **Token Amount**: ${tokenAmount.toLocaleString()} tokens  
 **Transaction Value**: ${transactionSolValue.toFixed(4)} SOL  
-**New Token Balance**: ${newTokenBalance.toFixed(8)} tokens  
+**New Token Balance**: ${newTokenBalance.toFixed(8)} tokens 
+**Token Price**: ${tokenPriceSol} SOL
 ---
 **Market Cap**: ${marketCapSol.toFixed(4)} SOL  
 **Tokens in Bonding Curve**: ${vTokensInBondingCurve.toLocaleString()} tokens  
