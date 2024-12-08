@@ -4,6 +4,7 @@ import createTables from "./config/createTables.js";
 import cors from "cors";
 import pool from "./config/db.js";
 import pumpWs from "./watchPump.js";
+import discordClient from "./discord.js";
 
 const app = express();
 const port = 3000;
@@ -11,6 +12,8 @@ const port = 3000;
 await createTables();
 
 pumpWs;
+
+discordClient;
 
 app.use(cors());
 
@@ -23,6 +26,7 @@ const server = app.listen(port, () => {
 });
 
 process.on("SIGINT", async () => {
+    console.log("\n");
     console.log("Shutting down...");
     pool.end();
     pumpWs.close();
