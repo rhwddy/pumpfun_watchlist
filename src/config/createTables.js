@@ -25,13 +25,15 @@ export default async function createTables() {
       CREATE TABLE IF NOT EXISTS wallet_channel (
           wallet_id INT REFERENCES wallet(id) ON DELETE CASCADE,    
           channel_id INT REFERENCES channel(id) ON DELETE CASCADE,
-          PRIMARY KEY (wallet_id, channel_id)   
+          PRIMARY KEY (wallet_id, channel_id),
+          UNIQUE (channel_id, wallet_id)
       );
 
       CREATE TABLE IF NOT EXISTS token_channel (
           token_id INT REFERENCES token(id) ON DELETE CASCADE,    
           channel_id INT REFERENCES channel(id) ON DELETE CASCADE,  
-          PRIMARY KEY (token_id, channel_id)    
+          PRIMARY KEY (token_id, channel_id),
+          UNIQUE (channel_id, token_id)
       );
 
       CREATE INDEX IF NOT EXISTS idx_wallet_channel_wallet_id ON wallet_channel(wallet_id);
