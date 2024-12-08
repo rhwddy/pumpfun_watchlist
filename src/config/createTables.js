@@ -8,12 +8,13 @@ export default async function createTables() {
         const migrationQuery = `
       CREATE TABLE IF NOT EXISTS wallet (
           id SERIAL PRIMARY KEY,    
-          address VARCHAR(255) UNIQUE NOT NULL   
+          address VARCHAR(255) UNIQUE NOT NULL,
+          name VARCHAR(255) NOT NULL
       );
 
       CREATE TABLE IF NOT EXISTS token (
           id SERIAL PRIMARY KEY,    
-          address VARCHAR(255) UNIQUE NOT NULL   
+          address VARCHAR(255) UNIQUE NOT NULL
       );
 
       CREATE TABLE IF NOT EXISTS channel (
