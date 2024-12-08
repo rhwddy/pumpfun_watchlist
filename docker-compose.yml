@@ -1,0 +1,38 @@
+services:
+  postgresdb:
+    image: postgres
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - POSTGRES_USER=$PGUSER
+      - POSTGRES_PASSWORD=$PGPASSWORD
+      - POSTGRES_DB=$PGDATABASE
+    ports:
+      - $POSTGRESDB_LOCAL_PORT:$PGPORT
+    volumes:
+      - db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "$PGUSER", "-d", "$PGDATABASE"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+  app:
+    depends_on:
+      - postgresdb
+    build: .
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - $NODE_LOCAL_PORT:3000
+    environment:
+      - DB_HOST=postgresdb
+      - DB_USER=$PGUSER
+      - DB_PASSWORD=$PGPASSWORD
+      - DB_NAME=$PGDATABASE
+      - DB_PORT=$PGPORT
+    stdin_open: true
+    tty: true
+
+volumes: 
+  db:
