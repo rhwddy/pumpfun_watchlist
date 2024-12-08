@@ -32,6 +32,5 @@ export default function tokenTransaction(data) {
 **Tokens in Bonding Curve**: ${vTokensInBondingCurve.toLocaleString()} tokens
 **Sol in Bonding Curve**: ${vSolInBondingCurve.toFixed(4)} SOL
 ---
-[Transaction Details](https://solscan.io/tx/${signature})
-  `;
+[Transaction Details](https://solscan.io/tx/${signature})`;
 }
