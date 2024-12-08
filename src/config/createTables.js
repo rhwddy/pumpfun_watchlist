@@ -18,7 +18,7 @@ export default async function createTables() {
 
       CREATE TABLE IF NOT EXISTS channel (
           id SERIAL PRIMARY KEY,    
-          message_to VARCHAR(255) NOT NULL  
+          message_to VARCHAR(255) UNIQUE NOT NULL  
       );
 
       CREATE TABLE IF NOT EXISTS wallet_channel (
