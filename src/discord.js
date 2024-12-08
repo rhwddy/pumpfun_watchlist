@@ -25,14 +25,6 @@ const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
         await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
             body: commands,
         });
-
-        const gaf = await rest.get(
-            Routes.applicationCommands(process.env.CLIENT_ID)
-        );
-
-        console.log(gaf);
-
-        console.log("Successfully reloaded global (/) commands.");
     } catch (error) {
         console.error(error);
     }
