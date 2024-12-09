@@ -8,10 +8,25 @@ import {
 import discordClient from "./discord.js";
 
 export default async function sendDiscordMessage(data) {
-    const tokenChannels = await getTokenChannels(data.mint);
-    const walletChannels = await getWalletChannels(data.traderPublicKey);
+    const {
+        mint,
+        traderPublicKey,
+        txType,
+        tokenAmount,
+        vTokensInBondingCurve,
+        vSolInBondingCurve,
+    } = data;
 
-    // removing duplicates from tokenChannels
+    const tokenPriceSol = vSolInBondingCurve / vTokensInBondingCurve;
+    const transactionSolValue = tokenAmount * tokenPriceSol;
+
+    if (transactionSolValue < 0.05) {
+        return;
+    }
+
+    const tokenChannels = await getTokenChannels(mint);
+    const walletChannels = await getWalletChannels(traderPublicKey);
+
     const filteredTokenChannels = tokenChannels.filter(
         (tokenChannel) =>
             !walletChannels.some(
@@ -20,7 +35,7 @@ export default async function sendDiscordMessage(data) {
             )
     );
 
-    if (data.txType === "create") {
+    if (txType === "create") {
         walletChannels.forEach((channel) => {
             const channelClient = discordClient.channels.cache.get(
                 channel.message_to
