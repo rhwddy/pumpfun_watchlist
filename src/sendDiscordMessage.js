@@ -20,10 +20,6 @@ export default async function sendDiscordMessage(data) {
     const tokenPriceSol = vSolInBondingCurve / vTokensInBondingCurve;
     const transactionSolValue = tokenAmount * tokenPriceSol;
 
-    if (transactionSolValue < 0.05) {
-        return;
-    }
-
     const tokenChannels = await getTokenChannels(mint);
     const walletChannels = await getWalletChannels(traderPublicKey);
 
@@ -42,7 +38,7 @@ export default async function sendDiscordMessage(data) {
             );
             channelClient.send(walletCreatedToken(data, channel));
         });
-    } else {
+    } else if (transactionSolValue < 0.05) {
         walletChannels.forEach((channel) => {
             const channelClient = discordClient.channels.cache.get(
                 channel.message_to
