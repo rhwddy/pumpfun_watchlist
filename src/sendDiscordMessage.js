@@ -38,7 +38,7 @@ export default async function sendDiscordMessage(data) {
             );
             channelClient.send(walletCreatedToken(data, channel));
         });
-    } else if (transactionSolValue < 0.05) {
+    } else if (transactionSolValue > 0.05) {
         walletChannels.forEach((channel) => {
             const channelClient = discordClient.channels.cache.get(
                 channel.message_to
