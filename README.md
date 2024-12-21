@@ -29,7 +29,7 @@ Monitor a specific token by its contract address.
 _/follow-token_
 
 #### Arguments:  
-- **`contract-address`** *(required)*: The smart contract address of the token you want to follow.  
+- **`ca`** *(required)*: The smart contract address of the token you want to follow.  
 
 #### Example:  
 _/follow-token contract-address: 0xabcdef123456789_
