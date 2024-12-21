@@ -32,7 +32,7 @@ _/follow-token_
 - **`ca`** *(required)*: The smart contract address of the token you want to follow.  
 
 #### Example:  
-_/follow-token contract-address: 0xabcdef123456789_
+_/follow-token ca: 0xabcdef123456789_
 
 ---
 
