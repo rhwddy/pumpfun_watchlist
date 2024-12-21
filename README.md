@@ -3,8 +3,6 @@
 ## Overview  
 The **Pump Fun Watchlist Bot** allows you to track wallets and tokens in real time on Discord. With simple slash commands, you can monitor activity and get updates directly in your server.
 
----
-
 [Install here](https://discord.com/oauth2/authorize?client_id=1315115026775933031)
 
 ---
